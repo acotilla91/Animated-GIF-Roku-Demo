@@ -1,4 +1,7 @@
 sub init()
+  m.decoder = createObject("roSGNode", "GIFDecoder")
+  m.decoder.delegate = m.top
+
   m.top.setFocus(true)
   m.top.backgroundURI = ""
   m.top.backgroundColor = "#292C34"
@@ -62,13 +65,17 @@ function onKeyEvent(key as String, press as Boolean) as Boolean
 end function
 
 sub focusItem(item as Integer)
-  if item < 0 or item >= m.totalItems or m.focusedItem = item
+  decoderReady = m.decoder.state = "init" or m.decoder.state = "stop"
+  if item < 0 or item >= m.totalItems or m.focusedItem = item or not decoderReady
     return
   end if
 
   ' Re-position focus border
   m.focusedItem = item
   alignNodeToNodeCenter(m.focusBorder, m.posterGrid.getChild(item))
+
+  ' Start decoder
+  m.decoder.callFunc("decodeGIF", getGIFUrl(item))
 end sub
 
 sub alignNodeToNodeCenter(node, sibling)
@@ -79,3 +86,8 @@ end sub
 function getGIFUrl(posterIndex as Integer) as String
   return "pkg:/images/frozen" + (posterIndex + 1).toStr() + ".gif"
 end function
+
+sub gifDecoderDidFinish(frames as Object, fps as Float)
+  m.frames = frames
+  ?"m.frames "m.frames
+end sub

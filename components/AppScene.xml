@@ -1,5 +1,7 @@
 <component name="AppScene" extends="Scene">
   <interface>
+    <!-- GIFDecoder callback -->
+    <function name="gifDecoderDidFinish"/>
   </interface>
 
   <script type="text/brightscript" uri="pkg:/components/AppScene.brs"/>
