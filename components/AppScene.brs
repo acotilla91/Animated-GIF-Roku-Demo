@@ -1,4 +1,5 @@
 sub init()
+  m.animator = createObject("roSGNode", "FrameAnimator")
   m.decoder = createObject("roSGNode", "GIFDecoder")
   m.decoder.delegate = m.top
 
@@ -76,6 +77,9 @@ sub focusItem(item as Integer)
 
   ' Start decoder
   m.decoder.callFunc("decodeGIF", getGIFUrl(item))
+
+  ' Stop previous poster animation
+  m.animator.callFunc("finish")
 end sub
 
 sub alignNodeToNodeCenter(node, sibling)
@@ -88,6 +92,5 @@ function getGIFUrl(posterIndex as Integer) as String
 end function
 
 sub gifDecoderDidFinish(frames as Object, fps as Float)
-  m.frames = frames
-  ?"m.frames "m.frames
+  m.animator.callFunc("start", frames, fps, m.posterGrid.getChild(m.focusedItem))
 end sub
