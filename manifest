@@ -1,0 +1,9 @@
+title=Animated GIF Roku Demo
+major_version=1
+minor_version=0
+build_version=0
+splash_min_time=0
+splash_rsg_optimization=1
+mm_icon_focus_hd=pkg:/images/channel_store_icon-hd.jpg
+ui_resolutions=fhd
+uri_resolution_autosub=$$RES$$,sd,hd,fhd

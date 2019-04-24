@@ -1,0 +1,6 @@
+<component name="AppScene" extends="Scene">
+  <interface>
+  </interface>
+
+  <script type="text/brightscript" uri="pkg:/components/AppScene.brs"/>
+</component>
