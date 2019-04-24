@@ -1,0 +1,12 @@
+<component name="GIFDecoder" extends="Task">
+  <interface>
+    <!-- Callback listener -->
+    <field id="delegate" type="node"/>
+
+    <!-- Extracts the frames of the given GIF and stores them locally as individual GIF files.
+      - Parameter {String} gifUrl: The url of the GIF to decode. -->
+    <function name="decodeGIF"/>
+  </interface>
+
+  <script type="text/brightscript" uri="pkg:/components/GIFDecoder.brs"/>
+</component>
