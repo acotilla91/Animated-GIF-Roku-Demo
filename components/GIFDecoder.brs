@@ -1,4 +1,4 @@
-sub decodeGIF(gifPath as String, preload as Boolean)
+sub decodeGIF(gifPath as String)
   m.top.functionName = "runDecoder"
 
   m.gifPath = gifPath

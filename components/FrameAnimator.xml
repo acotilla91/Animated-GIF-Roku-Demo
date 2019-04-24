@@ -1,0 +1,8 @@
+<component name="FrameAnimator" extends="Node">
+  <interface>
+    <function name="start"/>
+    <function name="finish"/>
+  </interface>
+
+  <script type="text/brightscript" uri="pkg:/components/FrameAnimator.brs"/>
+</component>
