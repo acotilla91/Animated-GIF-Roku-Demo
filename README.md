@@ -3,6 +3,8 @@
 
 This demo app showcases how to decode and display animated GIF files on Roku using the SceneGraph SDK.
 
+![Demo](https://github.com/acotilla91/Animated-GIF-Roku-Demo/blob/master/GIF_DEMO_IN-APP.gif)
+
 ## Running the app
 1. Clone this repo
 	```
