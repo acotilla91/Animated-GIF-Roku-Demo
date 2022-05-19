@@ -32,6 +32,7 @@ sub setupPosterGrid()
 
     poster = m.posterGrid.createChild("Poster")
     poster.loadSync = true
+    poster.loadDisplayMode = "scaleToFit"
     poster.uri = getGIFUrl(i)
     poster.translation = [x, y]
     poster.width = m.itemWidth

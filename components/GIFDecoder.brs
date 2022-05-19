@@ -1,3 +1,29 @@
+' This file takes in a gif, extracts individual frames from the gif and saves each frame in memory.
+' NOTE: Gif files that use inter-frame coalescence will not work, only overlay (overwrite graphic) will work.
+
+' Anatomy of a gif file:
+'   Header And Global Color Info:
+'       Header (Type of gif format)
+'       Logical Screen Descriptor (width, height, color resolution, background color, aspect ratio, color table size)
+'       Global Color Table (color palette used for the entire file)
+'   Extension Information:
+'       Comment Extension (text field for a comment)
+'       Application Extension (app id (text), number of iterations)
+'       Graphic Control Extension - comes before each frame and can be customized for each frame. (transparent color flag, user input flag, disposal method, delay time of frame, transparent color in palette)
+'   Image Frame(n) Info:
+'       Local Image Descriptor (margin left, margin top, width, height, interlaced flag, color table sorted flag, minimum code size)
+'       Local Color Table (same as global color table, but for just that frame)
+'       Image Data (non-meta data bytes to draw image)
+'   Extension Information (after all the image frames)
+'       Comment Section (text field for a comment)
+'       Plain-Text Section - text to be rendered on top of the image (margin left, margin top, text width, text height, text color, text bg color, text)
+'   Trailer (indicating EOF)
+
+' Useful links:
+' https://www.cs.albany.edu/~sdc/CSI333/Fal07/Lect/L18/Summary.html
+' http://web.cecs.pdx.edu/~harry/compilers/ASCIIChart.pdf
+' https://github.com/TheNeoBurn/GifWrapper - program that will help look at meta info of blocks
+
 sub decodeGIF(gifPath as String)
   m.top.functionName = "runDecoder"
 
@@ -76,6 +102,11 @@ sub runDecoder()
         delayTime = gifBytes[byteIndex + 4] / 100.0
         totalDuration+= delayTime
 
+        graphicControlBytes = subByteArrayFrom(gifBytes, byteIndex, 8)
+
+        ' Setting the background to transparent, disposal method to RestoreToBGColor (00001001)
+        graphicControlBytes[3] = 9
+
         ' The graphic control extension block has a fixed size of 8
         increment = 8
       else
@@ -103,6 +134,9 @@ sub runDecoder()
       if localColorTableSize = 0 and globalColorTableBytes <> invalid
         globalColorTableBytes.appendFile(gifFramePath, 0, globalColorTableSize)
       end if
+
+      ' Append the graphic control extension
+      if graphicControlBytes <> invalid then graphicControlBytes.appendFile(gifFramePath, 0, 8)
 
       ' Append the image data of this frame
       gifBytes.appendFile(gifFramePath, byteIndex, imageDescriptorAndDataSize)
